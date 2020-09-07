@@ -1,3 +1,7 @@
+1.2.3 (2020-06-28)
+* Remove python requirement to retain Kodi18/19 compatibility
+* Adjust Dialog().yesno due to Kodi19 change
+
 1.2.2 (2019-12-30)
 * simplify settings for Kodi 18 and below
 

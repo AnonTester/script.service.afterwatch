@@ -55,7 +55,7 @@ Credits to Pedro Pinto (r.pynto@gmail.com) for the original add-on where most of
 * Fix alternative method move
 </news>
 		<forum>https://forum.kodi.tv/showthread.php?tid=162770</forum>
-		<source>https://github.com/AnonTester/kodi-repo/tree/master/script.service.afterwatch</source>
+		<source>https://github.com/AnonTester/script.service.afterwatch</source>
                 <assets>
                         <icon>icon.png</icon>
                         <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
