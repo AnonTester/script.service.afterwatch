@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
 import xbmcgui
+import xbmcaddon
 from resources.lib import dialog, utilfile, utilxbmc
 from resources.lib.debug import debug
-from resources.lib.utils import info, setting, log
+from resources.lib.utils import info, setting, log, try_decode
 from resources.lib.progress import Progress
 from resources.lib.movie import Movie
 from resources.lib.episode import Episode
@@ -103,9 +104,13 @@ class AfterWatchPlayer(xbmc.Player):
             if debug.get():
                 log(debug.traceback.print_exc(), xbmc.LOGERROR)
 
+ADDON_ID='script.service.afterwatch'
+addon = xbmcaddon.Addon(ADDON_ID)
+addonversion = try_decode(addon.getAddonInfo('version'))
+
 monitor = AfterWatchMonitor()
 player = AfterWatchPlayer()
-log("started")
+log("started v%s" % (addonversion))
 player.checkPlayBackStarted(True)
 monitor.waitForAbort()
-log("stopped")
+log("stopped v%s" % (addonversion))

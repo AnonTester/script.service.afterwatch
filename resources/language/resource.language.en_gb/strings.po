@@ -53,6 +53,35 @@ msgctxt "#30113"
 msgid "Exclude word list, comma separated"
 msgstr ""
 
+msgctxt "#30114"
+msgid "Include word list, comma separated"
+msgstr ""
+
+msgctxt "#30115"
+msgid "Restrictions"
+msgstr ""
+
+msgctxt "#30116"
+msgid "Exclude folder"
+msgstr ""
+
+msgctxt "#30117"
+msgid "Include only folder"
+msgstr ""
+
+msgctxt "#30118"
+msgid "Movies not managed, restrictions cannot be set."
+msgstr ""
+
+msgctxt "#30119"
+msgid "Episodes not managed, restrictions cannot be set."
+msgstr ""
+
+msgctxt "#30120"
+msgid "Word restrictions"
+msgstr ""
+
+
 msgctxt "#30130"
 msgid "Disabled"
 msgstr ""
@@ -83,6 +112,14 @@ msgstr ""
 
 msgctxt "#30137"
 msgid "Single folder (lib/title/files.*)"
+msgstr ""
+
+msgctxt "#30138"
+msgid "Exclude specific shows"
+msgstr ""
+
+msgctxt "#30139"
+msgid "Include only specific shows"
 msgstr ""
 
 # SETTINGS PROPERTIES

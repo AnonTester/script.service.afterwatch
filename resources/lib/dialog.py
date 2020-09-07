@@ -10,7 +10,7 @@ else:
 def proceed(title, subtitle):
     proceed = True
     if setting('confirm') == 'true':
-        proceed = xbmcgui.Dialog().yesno(info('name'), title, lang(30526) % subtitle)
+        proceed = xbmcgui.Dialog().yesno(info('name'), title+"\n"+lang(30526) % subtitle)
     return proceed
 
 def warning(module, count):

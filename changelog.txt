@@ -1,5 +1,17 @@
+1.2.2 (2019-12-30)
+* simplify settings for Kodi 18 and below
+
+1.2.1 (2019-12-29)
+* fix error due to removal of credentials of non-smb paths
+
+1.2.0 (2019-12-29)
+* Reorganise settings, added restrictions menu
+* Add episode restriction option enabling to select the opposite of the exclude list, i.e. whitelist
+* Add movie/episode 'exclude folder' and 'include only folder' restriction
+
 1.1.1 (2019-12-25)
-* Add python2 backwards compatibility
+* Add python 2 backwards compatibility
+* Skip processing if episodes or movies are not managed
 
 1.1.0 (2019-11-17)
 * Migrate to Python 3 for Kodi 19. Not backwards compatible.

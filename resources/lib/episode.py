@@ -9,6 +9,7 @@ if sys.version_info.major == 3:
     from .utils import log, info, lang, setting, set_setting, rpc, ValueErrorHandler
     from .video import Video
     from .debug import debug
+    from urllib.parse import urlparse
 else:
     import utilxbmc
     import dialog, utilfile, utilxbmc
@@ -16,6 +17,7 @@ else:
     from utils import log, info, lang, setting, set_setting, rpc, ValueErrorHandler
     from video import Video
     from debug import debug
+    import urlparse
 
 monitor = xbmc.Monitor()
 
@@ -146,11 +148,49 @@ class Episode(Video):
 
 
     def ended(self):
-        excludelist = setting('fm_episodes_excludelist').lower().split(',')
-        log("Episode.ended: excludelist=%s" % excludelist)
-        if any(self.path.lower().find(v.strip()) >= 1 for v in excludelist):
-            log("Episode.ended: Exclude word matched, stop further processing")
+        if setting('ps_episodes_quit_menu') == 'false' and setting('ps_episodes_logoff') == 'false' and setting('ps_episodes_display_off') == 'false' \
+           and (not setting('fm_episodes_manage') or setting('fm_episodes_manage') == '0'): #episode management disabled and no post episode action set
+        #if not setting('fm_episodes_manage') or setting('fm_episodes_manage') == '0': # episode management disabled
+            log("Episode.ended: Not managing episodes, stop further processing")
             return
+        restriction = setting('fm_episodes_restrictions')
+        if restriction==1:
+            excludelist = setting('fm_episodes_excludelist').lower().split(',')
+            log("Episode.ended: excludelist=%s" % excludelist)
+            if any(self.path.lower().find(v.strip()) >= 1 for v in excludelist):
+                log("Episode.ended: Exclude word matched, stop further processing")
+                return
+        if restriction == '2':
+            onlylist = setting('fm_episodes_onlylist').lower().split(',')
+            log("Episode.ended: onlylist=%s" % onlylist)
+            if not any(self.path.lower().find(v.strip()) >= 1 for v in onlylist):
+                log("Episode.ended: Include word not matched, stop further processing")
+                return
+            else:
+                log("Episode.ended: Include word matched, continue processing")
+
+        excludefolder = setting('fm_episodes_excludefolder').lower()
+        if not excludefolder == "":
+            #remove username/password of smb source url
+            if excludefolder.startswith('smb://'):
+                parsed = urlparse(excludefolder)
+                parseresult = parsed._replace(netloc="{}".format(parsed.hostname))
+                excludefolder = parseresult.geturl()
+            if self.path.lower().startswith(excludefolder):
+                log("Episode.ended: Episode in excluded folder, stop further processing")
+                return
+
+        includefolder = setting('fm_episodes_includefolder').lower()
+        if not includefolder == "":
+            #remove username/password of smb source url
+            if includefolder.startswith('smb://'):
+                parsed = urlparse(includefolder)
+                parseresult = parsed._replace(netloc="{}".format(parsed.hostname))
+                includefolder = parseresult.geturl()
+            if not self.path.lower().startswith(includefolder):
+                log("Episode.ended: Episode not in included folder, stop further processing")
+                return
+
         # pre confirm
         steps = 0
         move = False

@@ -56,13 +56,13 @@ def set_setting(id, val):
 def encode_path(path):
     """os.path does not handle unicode properly, i.e. when locale is C, file
     system encoding is assumed to be ascii. """
-    if sys.platform.startswith('win'):
+    if sys.platform.startswith('win') or sys.version_info.major == 3:
         return path
     return path.encode('utf-8')
 
 
 def decode_path(path):
-    if sys.platform.startswith('win'):
+    if sys.platform.startswith('win') or sys.version_info.major == 3:
         return path
     return path.decode('utf-8')
 
@@ -107,3 +107,25 @@ def ValueErrorHandler(err):
     if err[0] == 'os.rmdir':
         log("ValueError Exception: Error removing folder: %s" % err[1])
         dialog.error(lang(30612) + ' %s' % err[1])
+
+def try_encode(text, encoding="utf-8"):
+    '''helper to encode a string to utf-8'''
+    if sys.version_info.major == 3:
+        return text
+    else:
+        try:
+            return text.encode(encoding, "ignore")
+        except Exception:
+            return text
+
+
+def try_decode(text, encoding="utf-8"):
+    '''helper to decode a string into unicode'''
+    if sys.version_info.major == 3:
+        return text
+    else:
+        try:
+            return text.decode(encoding, "ignore")
+        except Exception:
+            return text
+
