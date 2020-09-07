@@ -17,11 +17,14 @@
 
 from __future__ import unicode_literals
 
-import os
+import os, sys
 import xbmc
 import json
 import time
-from utils import is_url, rpc, log
+if sys.version_info.major == 3:
+    from .utils import is_url, rpc, log
+else:
+    from utils import is_url, rpc, log
 
 
 def _split_path(path):

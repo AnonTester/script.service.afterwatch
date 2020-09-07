@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
+import os, sys
 import xbmc
 import xbmcgui
-import utilxbmc
-import videolibrary
-from utils import info, lang, setting
-from utils import log
+if sys.version_info.major == 3:
+    from . import utilxbmc
+    from . import videolibrary
+    from .utils import info, lang, setting, log
+else:
+    import utilxbmc
+    import videolibrary
+    from utils import info, lang, setting, log
 
 monitor = xbmc.Monitor()
 
@@ -28,24 +33,24 @@ class Progress:
 		self.module_current = 0
 
 	def update(self, msg):
-		percent = self.current * 100 / self.steps
+		percent = int(self.current * 100 / self.steps)
 		if self.enable:
 			self.bar.update(percent, info('name'), lang(30531) % (self.module_title, msg))
 		self.current += 1
 		self.module_current += 1
-		log('update: self.current=%s, self.module_current=%s' % (self.current, self.module_current))
+		log('Progress.update: self.current=%s, self.module_current=%s' % (self.current, self.module_current))
 
 	def finish_module(self):
-		log('finish_module: self.module_steps=%s, self.module_current=%s' % (self.module_steps, self.module_current))
+		log('Progress.finish_module: self.module_steps=%s, self.module_current=%s' % (self.module_steps, self.module_current))
 		if not self.module_steps == self.module_current:
 			skip = self.module_steps - self.module_current
 			self.current += skip
 			self.module_current += skip
 		percent = self.current * 100 / self.steps
-		log('finish_module: self.current=%s, self.steps=%s' % (self.current, self.steps))
+		log('Progress.finish_module: self.current=%s, self.steps=%s' % (self.current, self.steps))
 		if self.current == self.steps:
 			if self.enable:
-				log('finish_module: self.enable=%s' % (self.enable))
+				log('Progress.finish_module: self.enable=%s' % (self.enable))
 				self.bar.update(100, info('name'), 'Done')
 				monitor.waitForAbort(1)
 				self.bar.close()
@@ -59,9 +64,9 @@ class Progress:
 				pass
 			while xbmc.getCondVisibility('Library.IsScanningVideo'):
 				xbmc.sleep(20)
-			percent = (self.current-1) * 100 / self.steps
+			percent = (self.current - 1) * 100 / self.steps
 			if self.enable:
 				self.bar.update(percent, info('name'),  lang(30531) % (self.module_title, lang(30513)))
 			self.current += 1
 			self.module_current += 1
-			log('update_library: self.current=%s, self.module_current=%s' % (self.current, self.module_current))
+			log('Progress.update_library: self.current=%s, self.module_current=%s' % (self.current, self.module_current))

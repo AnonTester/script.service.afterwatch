@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.afterwatch" name="After Watch" version="1.0.0" provider-name="jvandenbroek">
+<addon id="script.service.afterwatch" name="After Watch" version="1.1.1" provider-name="jvandenbroek, wuff">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>
@@ -16,9 +16,27 @@
 The alternate file management method is used to be compatible with SMB and NFS shares. When using only local (mounted) paths,
 it's recommended not to activate this method (moving files will be much faster).
 
+NOTE: "Allow file renaming and deletion" under Settings -> Appearance -> File Lists needs to be enabled in order for this plugin to work. 
+
 Credits to Pedro Pinto (r.pynto@gmail.com) for the original add-on where most of the code in this version is based on!
 </description>
 		<platform>all</platform>
 		<email>jvandenbroek@gmail.com</email>
+		<news>
+1.1.1 (2019-12-25)
+* Add python 2 backwards compatibility
+
+1.1.0 (2019-11-17)
+* Migrate to Python 3 for Kodi 19. Not backwards compatible.
+* Adjust setting to turn of display to only state Linux
+* Removed Windows CEC binary from addon
+
+1.0.10 (2019-06-26)
+* Remove duplicate setting "remove video from library"
+
+1.0.9 (2019-06-18):
+* Replace strings.xml with strings.po for Kodi v19 compatibility
+* Fix alternative method move
+</news>
 	</extension>
 </addon>
