@@ -6,10 +6,12 @@ if sys.version_info.major == 3:
     from . import utilxbmc
     from . import videolibrary
     from .utils import info, lang, setting, log
+    from .debug import debug
 else:
     import utilxbmc
     import videolibrary
     from utils import info, lang, setting, log
+    from debug import debug
 
 monitor = xbmc.Monitor()
 
@@ -56,9 +58,18 @@ class Progress:
                 self.bar.close()
 
     def update_library(self, path=False):
+        if debug.get():
+            log('remove_video setting set to %s' % (setting('remove_video')))
         if path and setting('remove_video') == 'true':
+            if debug.get():
+                log('removing video from video library %s' % (path))
             videolibrary.remove_video(path)
+
+        if debug.get():
+            log('update_library setting set to %s' % (setting('update_library')))
         if setting('update_library') == 'true':
+            if debug.get():
+                log('updating whole video library %s' % (path))
             xbmc.executebuiltin('UpdateLibrary(video)')
             while not xbmc.getCondVisibility('Library.IsScanningVideo'):
                 pass

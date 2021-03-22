@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
+import os, sys
 import xbmcgui
 import xbmcaddon
+import xbmcvfs
 from resources.lib import dialog, utilfile, utilxbmc
 from resources.lib.debug import debug
 from resources.lib.utils import info, setting, log, try_decode
@@ -107,6 +108,15 @@ class AfterWatchPlayer(xbmc.Player):
 ADDON_ID='script.service.afterwatch'
 addon = xbmcaddon.Addon(ADDON_ID)
 addonversion = try_decode(addon.getAddonInfo('version'))
+
+if debug.get():
+    if sys.version_info.major == 3:
+        settingspath = xbmcvfs.translatePath('special://profile/addon_data'+'/'+ADDON_ID+'/'+'settings.xml')
+    else:
+        settingspath = xbmc.translatePath('special://profile/addon_data'+'/'+ADDON_ID+'/'+'settings.xml')
+    with open( settingspath, 'r') as file:
+        settingsdata = file.read()
+        log("Entire settings.xml file:\n%s" % (settingsdata), xbmc.LOGINFO)
 
 monitor = AfterWatchMonitor()
 player = AfterWatchPlayer()

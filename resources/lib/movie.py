@@ -96,7 +96,7 @@ class Movie(Video):
         try:
             progress.update(lang(30516)) # deleting files
             source = os.path.dirname(self.path)
-            remove_empty = setting('fm_movie_remove_empty') == 'true'
+            remove_empty = setting('fm_movies_remove_empty') == 'true'
             if setting('fm_movies_structure') == '0': # multiple folders
                 count = utilfile.count_manage_directory(self.alt_method, source)
                 if not dialog.warning(lang(30132), count):
